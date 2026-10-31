@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Dalamud.NET.Sdk/15.0.0">
+  <PropertyGroup>
+    <Version>1.0.0.0</Version>
+    <Author>Lirou</Author>
+    <Name>Twitch World</Name>
+    <Punchline>Leia e envie mensagens do chat da Twitch dentro do FFXIV.</Punchline>
+    <Description>Cria a janela "Twitch World" que mostra o chat da Twitch dentro do jogo, com a cor e os selos de cada usuario e destaque para mencoes e bots. Bloqueia comandos (/ e !), emojis, emotes e links. Use /tw-chat mensagem para enviar mensagens ao chat da Twitch.</Description>
+    <Tags>twitch;chat</Tags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Icone do plugin: o Dalamud procura em images\icon.png ao lado do TwitchWorld.dll -->
+    <Content Include="images\icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+</Project>

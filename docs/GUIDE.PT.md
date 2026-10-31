@@ -1,0 +1,308 @@
+# Twitch World FF14 · Português (Brasil)
+
+[← back](../README.md)
+
+```text
+=====================================================================
+ TWITCH WORLD FF14 - Guia de instalação (Português)
+ Criado por Lirou
+=====================================================================
+
+Outros idiomas desta pasta (Docs): README_EN.txt (English) |
+README_JA.txt (日本語) | README_DE.txt (Deutsch) | README_FR.txt (Français)
+
+O plugin em si está em português. Só este guia existe em vários idiomas.
+
+
+---------------------------------------------------------------------
+ 1. O QUE É O TWITCH WORLD
+---------------------------------------------------------------------
+Um plugin do Dalamud que mostra o chat de qualquer canal da Twitch
+DENTRO do Final Fantasy XIV, e (se você quiser) deixa você responder
+sem sair do jogo.
+
+Existem DUAS formas de ver o chat (você pode usar as duas juntas):
+  * JANELA: uma janelinha do plugin, que você arrasta pela tela.
+  * ABA DO CHAT DO JOGO: as mensagens aparecem numa aba do próprio chat
+    do FF14, com a cor de cada pessoa e selos de MOD, VIP, etc.
+
+O que o plugin NÃO deixa passar (regras fixas):
+  * mensagens que começam com / ou ! (comandos de bots)
+  * emojis, emotes e links
+  * só um chat conectado por vez
+
+
+---------------------------------------------------------------------
+ 2. ANTES DE COMEÇAR (confira esta lista)
+---------------------------------------------------------------------
+[ ] Um PC com Windows 10 ou 11 e internet.
+[ ] O Final Fantasy XIV instalado e aberto pelo XIVLauncher, com o
+    Dalamud ligado (quem já usa plugins já tem isso).
+[ ] Você abriu o jogo pelo XIVLauncher pelo menos UMA vez.
+[ ] Uns 600 MB livres no disco C: e de 5 a 15 minutos de paciência.
+[ ] O jogo FECHADO durante a instalação (Parte A).
+
+Para o plugin funcionar no jogo você NÃO precisa ter conta na Twitch
+se só quiser LER o chat. Só precisa de conta para ENVIAR mensagens.
+
+
+---------------------------------------------------------------------
+ 3. AVISOS IMPORTANTES
+---------------------------------------------------------------------
+* Plugins do Dalamud NÃO são permitidos pelos termos da Square Enix.
+  Este plugin só lê e escreve texto e não automatiza nada do jogo, mas
+  o risco de usar plugins existe. Use por sua conta e risco.
+* O "token" da Twitch (Parte C) funciona como uma SENHA. Nunca mostre
+  nem envie para ninguém. Ele fica salvo em texto simples no seu PC.
+* Este plugin NÃO é oficial e não tem relação com a Square Enix, a
+  Twitch ou o Dalamud.
+* O instalador não tem assinatura digital paga. Por isso o Windows (e
+  alguns antivírus) pode estranhar. Veja a Parte A.
+
+
+---------------------------------------------------------------------
+ 4. PARTE A - INSTALAR (no computador, com o jogo fechado)
+---------------------------------------------------------------------
+  1. Dê DOIS CLIQUES no arquivo  TwitchWorldFF14-Setup.exe
+
+  2. Se aparecer uma janela AZUL escrito "O Windows protegeu o seu
+     computador":
+        - clique em  "Mais informações"
+        - depois clique no botão  "Executar assim mesmo"
+     (Isso aparece com todo programa novo sem assinatura digital paga.
+     Se o SEU antivírus bloquear, só libere se você baixou este
+     arquivo da página oficial do projeto no GitHub (aba Releases).)
+
+  3. Abre uma janela preta. Digite o número do seu idioma e aperte
+     Enter. Exemplo: 5 e Enter para Português.
+
+  4. Aparece uma caixa perguntando "Deseja continuar?". Clique em SIM.
+
+  5. AGUARDE. A janela preta vai mostrar o andamento [1/6] até [6/6].
+     NÃO feche a janela. Na primeira vez ela baixa o .NET (cerca de
+     250 MB), o que pode levar vários minutos. Se parecer parada,
+     espere: ela está trabalhando.
+
+  6. No final aparece a mensagem "Tudo pronto!" e:
+        - este guia abre no Bloco de Notas;
+        - dois atalhos aparecem na sua Área de Trabalho:
+            "Twitch World FF14"  (abre a pasta)
+            "Twitch World FF14 - Guia"  (abre este guia)
+        - o CAMINHO do plugin é COPIADO automaticamente (você vai
+          colar no jogo na Parte B).
+
+O programa foi instalado na pasta:   C:\Twitch World FF14
+
+Se aparecer uma mensagem de erro, veja a seção 9 (Problemas comuns).
+
+
+---------------------------------------------------------------------
+ 5. PARTE B - LIGAR O PLUGIN NO JOGO (só precisa fazer UMA vez)
+---------------------------------------------------------------------
+  1. Abra o Final Fantasy XIV pelo XIVLauncher e entre com o seu
+     personagem.
+
+  2. Na caixa de chat do jogo, digite:   /xlsettings   e aperte Enter.
+     Abre a janela "Dalamud Settings".
+
+  3. Na lista da esquerda, clique em  "Experimental".
+
+  4. Role a página até achar  "Dev Plugin Locations".
+
+  5. Clique na caixa de texto vazia dessa seção e COLE o caminho
+     apertando  Ctrl + V.  Deve aparecer exatamente:
+
+        C:\Twitch World FF14\Source\bin\Release\TwitchWorld.dll
+
+     (Se não colou nada, digite o caminho acima com cuidado.)
+
+  6. Clique no botão  +  ao lado da caixa. O caminho entra na lista.
+
+  7. Clique em  "Save and Close"  (Salvar e fechar), no rodapé.
+
+  8. Digite   /xlplugins   e aperte Enter.
+
+  9. No menu da esquerda clique em  "Dev Tools"  e depois em
+     "Installed Dev Plugins".
+
+ 10. Encontre  "Twitch World"  e deixe a chavinha LIGADA (acesa).
+     Você deve ver o ícone do Twitch World, "v1.0.0.0" e "by Lirou".
+
+ 11. Digite   /tw-chat   no chat do jogo. A janela "Twitch World" abre.
+
+Pronto! O plugin está instalado. Falta só escolher qual chat ler.
+
+
+---------------------------------------------------------------------
+ 6. PARTE C - CONECTAR AO CHAT DE UMA TWITCH
+---------------------------------------------------------------------
+O plugin vem LIMPO: nenhum canal e nenhuma conta configurados.
+
+Palavras que você vai ver na tela do plugin (está em português):
+   Config ......................... Configurações
+   Conectar / Conectar agora ...... Conectar
+   Reconectar ..................... Reconectar
+   Desconectar .................... Desconectar
+
+  1. Na janela "Twitch World", clique em  Config.
+
+  2. Em  "1) Link do chat (ou só o nome do canal)"  escreva o canal.
+     Pode ser qualquer um destes jeitos:
+        https://www.twitch.tv/nomedocanal
+        https://dashboard.twitch.tv/popout/u/nomedocanal/stream-manager/chat
+        nomedocanal
+     Abaixo deve aparecer em verde:  "Canal reconhecido: nomedocanal".
+
+  3. Em  "2) O que você quer fazer?"  escolha UMA opção:
+        ( ) Só ler as mensagens do chat
+              -> mais simples. NÃO precisa de conta nem de token.
+        ( ) Ler e também enviar mensagens (/tw-chat)
+              -> precisa do passo 4.
+
+  4. (SÓ se escolheu enviar mensagens) Pegue um token da Twitch:
+        a) Abra no navegador:  https://twitchtokengenerator.com
+           (site de terceiros bastante conhecido).
+        b) Escolha a opção  "Bot Chat Token".
+        c) Marque as permissões  chat:read  e  chat:edit  e autorize
+           com a SUA conta da Twitch.
+        d) Copie o  "Access Token"  (um texto longo).
+        e) No plugin, preencha:
+             "Seu nome de usuário da Twitch" = o nome da sua conta
+             "Token de acesso" = o token copiado (Ctrl+V)
+     LEMBRE: o token é como uma senha. Não mostre a ninguém.
+
+  5. Clique em  "Conectar agora".  O status deve ficar VERDE:
+        Conectado a #nomedocanal
+
+  6. (Opcional) Marque  "Conectar automaticamente ao abrir o jogo".
+
+As mensagens aparecem na janela "Twitch World".
+
+
+---------------------------------------------------------------------
+ 7. PARTE D - USAR: AS DUAS FORMAS
+---------------------------------------------------------------------
+
+=== FORMA 1: NA JANELA DO PLUGIN ===
+  * Digite  /tw-chat  (sem texto) para abrir ou fechar a janela.
+  * Arraste a janela e puxe os cantos para mudar o tamanho.
+  * Se escolheu "Ler e também enviar", escreva na caixa de baixo e
+    aperte Enter. Aqui NÃO precisa digitar /tw-chat.
+
+=== FORMA 2: DENTRO DO CHAT DO JOGO (numa aba) ===
+O jogo não deixa um plugin criar abas sozinho, então você cria uma e
+diz qual "canal" de chat ela mostra. Faça isto uma vez:
+
+  1. CRIAR A ABA: na janela de chat do jogo clique no botão  +  ao
+     lado das abas e dê o nome  Twitch.
+
+  2. NO PLUGIN (/tw-chat > Config):
+        - marque  "Mostrar as mensagens no chat do jogo (só você vê)"
+        - em "Canal usado no chat do jogo" deixe  "Linkshell [8]
+          (recomendado)".
+
+  3. NO JOGO, escolha qual canal cada aba mostra:
+        - abra  Character Configuration (Configurações do Personagem)
+          > Log Window Settings > Log Filters  (Filtros do Log).
+        - escolha a aba  "Twitch",  sub-aba  "Chat".
+        - MARQUE só  "Linkshell [8]"  (desmarque o resto dessa aba).
+        - agora escolha a aba  "General"  (e as outras que quiser) e
+          DESMARQUE  "Linkshell [8]",  para as mensagens não aparecerem
+          em dois lugares.
+        (Os nomes no seu jogo aparecem no idioma do seu jogo. Procure
+        o número [8].)
+
+  4. As mensagens aparecem na aba Twitch assim:
+        [SELOS] Nome disse: mensagem
+     Só VOCÊ vê isso. Ninguém no jogo vê.
+
+  Para ENVIAR, digite no chat do jogo:
+        /tw-chat sua mensagem
+  (Dica: crie uma macro com frases prontas, ex: /tw-chat obrigado!)
+
+CORES E SELOS (em /tw-chat > Config > "Cores e destaques do chat"):
+  * cada pessoa aparece com a cor que escolheu na Twitch. No chat do
+    jogo a cor é APROXIMADA (o jogo tem poucas cores).
+  * selos antes do nome: [STREAMER] [MOD] [VIP] [SUB] [BOT]
+  * mensagens que citam você ficam em DOURADO
+  * mensagens de bots (avisos de seguidor, raid...) ficam em verde-água
+  * nenhuma mensagem é escondida.
+
+
+---------------------------------------------------------------------
+ 8. COMANDOS
+---------------------------------------------------------------------
+   /tw-chat                  abre ou fecha a janela
+   /tw-chat sua mensagem     envia a mensagem para o chat da Twitch
+   /xlplugins                gerenciador de plugins do Dalamud
+   /xlsettings               configurações do Dalamud
+
+
+---------------------------------------------------------------------
+ 9. PROBLEMAS COMUNS
+---------------------------------------------------------------------
+- O instalador mostrou "Ops! Não deu certo":
+    1) Confira a internet e rode o instalador de novo.
+    2) Se continuar, tire um print da janela e envie junto com o
+       arquivo  C:\Twitch World FF14\install-log.txt  em uma "Issue" na
+       página do projeto no GitHub (aba Issues > New issue).
+
+- Avisou que não achou o Dalamud: abra o jogo pelo XIVLauncher uma
+  vez (com o Dalamud ligado), feche, e rode o instalador de novo.
+
+- "Twitch World" não aparece em "Installed Dev Plugins": confira se o
+  caminho da Parte B está certo, se clicou em +  e em "Save and
+  Close". Depois feche o jogo e abra de novo.
+
+- O ícone aparece como "?" : desligue e ligue o plugin, ou reinicie
+  o jogo.
+
+- Não aparece "Canal reconhecido": escreva só o nome do canal.
+
+- O status não fica verde: clique em "Conectar" ou "Reconectar" e
+  confira a internet.
+
+- Não vejo mensagens: confira se o canal está com gente conversando.
+
+- As mensagens aparecem na aba errada: refaça o passo 3 da Forma 2
+  (Linkshell [8] só na aba Twitch).
+
+- Minha mensagem não vai: confira se escolheu "Ler e também enviar",
+  usuário e token certos, e lembre que mensagens com / ! ou links são
+  recusadas. Há um intervalo mínimo de ~1,5 segundo entre mensagens.
+
+- O plugin parou de carregar depois de um patch do jogo: rode o
+  instalador de novo (ele prepara o plugin outra vez). Se o problema
+  continuar, o Dalamud pode ter mudado e será preciso uma versão nova.
+
+
+---------------------------------------------------------------------
+ 10. ATUALIZAR, APAGAR AS CONFIGURAÇÕES E DESINSTALAR
+---------------------------------------------------------------------
+ATUALIZAR / REINSTALAR: feche o jogo e rode o instalador de novo. Ele
+refaz tudo e MANTÉM as suas configurações.
+
+SE VOCÊ TINHA UMA VERSÃO ANTIGA em outra pasta (ex: C:\TwitchWorld):
+em /xlsettings > Experimental remova o caminho antigo (botão de
+lixeira) e salve, para não ficar com duas cópias.
+
+APAGAR AS CONFIGURAÇÕES (canal, usuário, token): com o jogo fechado,
+apague o arquivo
+   %APPDATA%\XIVLauncher\pluginConfigs\TwitchWorld.json
+(cole esse endereço na barra do Explorador de Arquivos).
+
+DESINSTALAR:
+  1. No jogo: /xlsettings > Experimental > remova o caminho do
+     TwitchWorld.dll (lixeira) > Save and Close.
+  2. Feche o jogo.
+  3. Apague os dois atalhos da Área de Trabalho.
+  4. Apague a pasta  C:\Twitch World FF14
+  5. (Se usou token) no site da Twitch, em Configurações > Conexões,
+     revogue o acesso do aplicativo, por segurança.
+
+
+---------------------------------------------------------------------
+ Twitch World FF14 - criado por Lirou.
+ Não oficial. Sem relação com Square Enix, Twitch ou Dalamud.
+---------------------------------------------------------------------
+```
