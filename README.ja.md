@@ -2,6 +2,8 @@
 
 [English](README.md) · [Português](README.pt-BR.md) · **日本語** · [Deutsch](README.de.md) · [Français](README.fr.md)
 
+**インストール方法:** 📦 インストーラー(.exe)– 下記 · 🔗 **[GitHub のリンク – 完全ガイド](docs/INSTALL_GITHUB.JA.md)**
+
 <p align="center"><img src="assets/icon.png" width="128" alt="Twitch World FF14"></p>
 
 > ファイナルファンタジーXIV の中で Twitch チャットを読んで返信できる Dalamud プラグイン。プログラマーでなくても使える 1 ファイルのインストーラー付き。
@@ -10,7 +12,7 @@
 
 ## ダウンロード
 
-**[⬇ インストーラーをダウンロード(最新リリース)](../../releases/latest)**
+**[⬇ インストーラーをダウンロード(最新リリース)](../../releases/tag/v1.0.0)**
 
 ## 機能
 
@@ -23,7 +25,7 @@
 
 ## クイックインストール(Windows 10/11)
 
-1. [最新リリース](../../releases/latest)の *Assets* から **TwitchWorldFF14-Setup.exe** をダウンロードします。
+1. [最新リリース](../../releases/tag/v1.0.0)の *Assets* から **TwitchWorldFF14-Setup.exe** をダウンロードします。
 2. FFXIV を終了し、ファイルをダブルクリック。青い「Windows によって PC が保護されました」画面が出たら **詳細情報 → 実行** を押します。
 3. 言語を選んで確認し、`[6/6]` になるまで待ちます(初回は .NET を約 250 MB ダウンロードします)。
 4. ゲーム内で `/xlsettings` → **Experimental** → **Dev Plugin Locations** に貼り付け(Ctrl+V・パスは自動コピー済み)→ **+** → **Save and Close**。

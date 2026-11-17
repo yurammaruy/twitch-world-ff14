@@ -2,6 +2,8 @@
 
 [English](README.md) · [Português](README.pt-BR.md) · [日本語](README.ja.md) · **Deutsch** · [Français](README.fr.md)
 
+**Installation:** 📦 mit dem Installer (.exe) – unten · 🔗 **[mit dem GitHub-Link – vollständige Anleitung](docs/INSTALL_GITHUB.DE.md)**
+
 <p align="center"><img src="assets/icon.png" width="128" alt="Twitch World FF14"></p>
 
 > Twitch-Chat in Final Fantasy XIV lesen und beantworten – ein Dalamud-Plugin mit Ein-Datei-Installer für Nicht-Programmierer.
@@ -10,7 +12,7 @@
 
 ## Download
 
-**[⬇ Installer herunterladen (neuestes Release)](../../releases/latest)**
+**[⬇ Installer herunterladen (neuestes Release)](../../releases/tag/v1.0.0)**
 
 ## Funktionen
 
@@ -23,7 +25,7 @@
 
 ## Schnellinstallation (Windows 10/11)
 
-1. Lade **TwitchWorldFF14-Setup.exe** vom [neuesten Release](../../releases/latest) herunter (Bereich *Assets*).
+1. Lade **TwitchWorldFF14-Setup.exe** vom [neuesten Release](../../releases/tag/v1.0.0) herunter (Bereich *Assets*).
 2. FFXIV schließen. Datei doppelklicken. Erscheint das blaue Fenster *„Der Computer wurde durch Windows geschützt“*: **Weitere Informationen → Trotzdem ausführen**.
 3. Sprache wählen, bestätigen und warten, bis `[6/6]` erreicht ist (beim ersten Mal lädt es .NET, ca. 250 MB).
 4. Im Spiel: `/xlsettings` → **Experimental** → **Dev Plugin Locations** → einfügen (Strg+V; Pfad ist bereits kopiert) → **+** → **Save and Close**.
