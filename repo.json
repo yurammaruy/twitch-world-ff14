@@ -1,0 +1,26 @@
+[
+  {
+    "Author": "Lirou",
+    "Name": "Twitch World",
+    "InternalName": "TwitchWorld",
+    "Punchline": "Leia e envie mensagens do chat da Twitch dentro do FFXIV.",
+    "Description": "Mostra o chat da Twitch dentro do jogo (janela e/ou aba do chat), com a cor e os selos de cada usuario. Use /tw-chat para abrir a janela ou enviar mensagens. Plugin nao oficial.",
+    "Tags": [
+      "twitch",
+      "chat",
+      "stream"
+    ],
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 15,
+    "AssemblyVersion": "1.1.0.0",
+    "RepoUrl": "https://github.com/yurammaruy/twitch-world-ff14",
+    "IconUrl": "https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/assets/icon.png",
+    "DownloadLinkInstall": "https://github.com/yurammaruy/twitch-world-ff14/releases/latest/download/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/yurammaruy/twitch-world-ff14/releases/latest/download/latest.zip",
+    "DownloadLinkTesting": "https://github.com/yurammaruy/twitch-world-ff14/releases/latest/download/latest.zip",
+    "IsHide": false,
+    "IsTestingExclusive": false,
+    "LastUpdate": 1794882818,
+    "Changelog": "Versao 1.1.0.0"
+  }
+]
