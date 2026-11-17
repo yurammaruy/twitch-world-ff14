@@ -1,0 +1,148 @@
+# Compila o plugin no servidor do GitHub e publica o link de instalacao
+# (repo.json) para o Dalamud. Ninguem precisa instalar nada no PC.
+#
+# Como usar: aba "Actions" > "Compilar e publicar o plugin" > "Run workflow".
+# (ou crie uma nova "Release" com uma tag como v1.1.0 - roda sozinho)
+
+name: Compilar e publicar o plugin
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versao do plugin (exemplo: 1.1.0)"
+        required: true
+        default: "1.1.0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publicar-plugin
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Manter o fim de linha dos arquivos
+        run: git config --global core.autocrlf false
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Definir a versao
+        id: ver
+        env:
+          EVENTO: ${{ github.event_name }}
+          TAG_RELEASE: ${{ github.event.release.tag_name }}
+          VERSAO_MANUAL: ${{ inputs.version }}
+        run: |
+          if [ "$EVENTO" = "release" ]; then V="$TAG_RELEASE"; else V="$VERSAO_MANUAL"; fi
+          V="${V#v}"
+          if ! [[ "$V" =~ ^[0-9]+(\.[0-9]+){0,3}$ ]]; then
+            echo "Versao invalida: $V (use algo como 1.1.0)"; exit 1
+          fi
+          IFS=. read -r a b c d <<< "$V"
+          if [ "$EVENTO" = "release" ]; then TAG="$TAG_RELEASE"; else TAG="v$V"; fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "v4=${a}.${b:-0}.${c:-0}.${d:-0}" >> "$GITHUB_OUTPUT"
+
+      - name: Compilar o plugin
+        env:
+          VERSAO: ${{ steps.ver.outputs.v4 }}
+        run: dotnet build plugin/TwitchWorld.csproj -c Release --nologo -p:Version="$VERSAO"
+
+      - name: Empacotar (latest.zip)
+        run: |
+          mkdir -p out
+          ZIP=$(find plugin/bin -name latest.zip | head -n 1)
+          if [ -n "$ZIP" ]; then
+            cp "$ZIP" out/latest.zip
+          else
+            echo "O SDK nao gerou o latest.zip; montando manualmente."
+            python - <<'PY'
+          import glob, os, zipfile
+          base = "plugin/bin/Release"
+          z = zipfile.ZipFile("out/latest.zip", "w", zipfile.ZIP_DEFLATED)
+          for pat in ("TwitchWorld.dll", "TwitchWorld.json", "images/icon.png"):
+              for f in glob.glob(os.path.join(base, pat)):
+                  z.write(f, os.path.relpath(f, base))
+          z.close()
+          PY
+          fi
+          echo "Conteudo do pacote:"
+          python -c "import zipfile;[print(' ',n) for n in zipfile.ZipFile('out/latest.zip').namelist()]"
+
+      - name: Publicar na Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.ver.outputs.tag }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" out/latest.zip --clobber
+          else
+            gh release create "$TAG" out/latest.zip --latest \
+              --title "Twitch World FF14 $TAG" \
+              --notes "Plugin Twitch World. Instale pelo link do README (Custom Plugin Repositories do Dalamud)."
+          fi
+
+      - name: Atualizar repo.json e links do README
+        env:
+          REPO: ${{ github.repository }}
+          TAG: ${{ steps.ver.outputs.tag }}
+          VERSAO: ${{ steps.ver.outputs.v4 }}
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          python - <<'PY'
+          import json, os, time
+          repo = os.environ["REPO"]; ver = os.environ["VERSAO"]; tag = os.environ["TAG"]
+          dl = f"https://github.com/{repo}/releases/latest/download/latest.zip"
+          d = {
+            "Author": "Lirou",
+            "Name": "Twitch World",
+            "InternalName": "TwitchWorld",
+            "Punchline": "Leia e envie mensagens do chat da Twitch dentro do FFXIV.",
+            "Description": "Mostra o chat da Twitch dentro do jogo (janela e/ou aba do chat), com a cor e os selos de cada usuario. Use /tw-chat para abrir a janela ou enviar mensagens. Plugin nao oficial.",
+            "Tags": ["twitch", "chat", "stream"],
+            "ApplicableVersion": "any",
+            "DalamudApiLevel": 15,
+            "AssemblyVersion": ver,
+            "RepoUrl": f"https://github.com/{repo}",
+            "IconUrl": f"https://raw.githubusercontent.com/{repo}/main/assets/icon.png",
+            "DownloadLinkInstall": dl,
+            "DownloadLinkUpdate": dl,
+            "DownloadLinkTesting": dl,
+            "IsHide": False,
+            "IsTestingExclusive": False,
+            "LastUpdate": int(time.time()),
+            "Changelog": f"Versao {ver}",
+          }
+          with open("repo.json", "w", encoding="utf-8", newline="\n") as f:
+              json.dump([d], f, indent=2, ensure_ascii=False)
+              f.write("\n")
+          PY
+          for f in README*.md docs/*.md; do sed -i "s#__REPO__#$REPO#g" "$f"; done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add repo.json README*.md docs
+          git diff --cached --quiet || git commit -m "Atualiza repo.json ($TAG)"
+          git push origin main
+
+      - name: Link de instalacao
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          echo "### Link para colar no Dalamud" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "https://raw.githubusercontent.com/$REPO/main/repo.json" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
