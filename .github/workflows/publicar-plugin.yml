@@ -56,6 +56,17 @@ jobs:
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "v4=${a}.${b:-0}.${c:-0}.${d:-0}" >> "$GITHUB_OUTPUT"
 
+      - name: Baixar o Dalamud (necessario para compilar)
+        shell: pwsh
+        run: |
+          $dest = Join-Path $env:APPDATA "XIVLauncher\addon\Hooks\dev"
+          New-Item -ItemType Directory -Force -Path $dest | Out-Null
+          $zip = Join-Path $env:RUNNER_TEMP "dalamud.zip"
+          Invoke-WebRequest -Uri "https://goatcorp.github.io/dalamud-distrib/latest.zip" -OutFile $zip
+          Expand-Archive -Force $zip $dest
+          "DALAMUD_HOME=$dest" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          Get-ChildItem $dest | Select-Object -First 12 -ExpandProperty Name
+
       - name: Compilar o plugin
         env:
           VERSAO: ${{ steps.ver.outputs.v4 }}
