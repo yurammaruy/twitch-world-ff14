@@ -12,7 +12,7 @@
     ],
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
-    "AssemblyVersion": "1.1.0.0",
+    "AssemblyVersion": "1.2.0.0",
     "RepoUrl": "https://github.com/yurammaruy/twitch-world-ff14",
     "IconUrl": "https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/assets/icon.png",
     "DownloadLinkInstall": "https://github.com/yurammaruy/twitch-world-ff14/releases/latest/download/latest.zip",
@@ -20,7 +20,7 @@
     "DownloadLinkTesting": "https://github.com/yurammaruy/twitch-world-ff14/releases/latest/download/latest.zip",
     "IsHide": false,
     "IsTestingExclusive": false,
-    "LastUpdate": 1794882818,
-    "Changelog": "Versao 1.1.0.0"
+    "LastUpdate": 1795136171,
+    "Changelog": "Versao 1.2.0.0"
   }
 ]
