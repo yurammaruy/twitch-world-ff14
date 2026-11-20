@@ -32,6 +32,18 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 
 > ヒント: Ctrl+V で何も貼り付けられない場合は、上のグレーの枠の右上のコピーボタンでもう一度コピーしてください。
 
+## Twitch トークン(メッセージ送信のみ)
+
+**トークンが必要なのはメッセージを「送信」するときだけです。** チャットを読むだけなら、アカウントもトークンも不要なので、この節は飛ばしてください。トークンはパスワードのように働く長い文字列で、プラグインがあなたとしてチャットに書き込めるようにします。Twitch のパスワードをプラグインに渡すことはありません。
+
+1. ブラウザで、チャットに使いたいアカウントで Twitch にログインしてから **https://twitchtokengenerator.com** を開きます(Twitch や本プロジェクトとは無関係の、よく知られたサイトです)。
+2. **Bot Chat Token**(チャットボット用)を選びます。独自選択の一覧しかない場合は、権限 **chat:read** と **chat:edit** にチェックを入れます。それ以外は不要です。
+3. Twitch で接続するボタンを押します。Twitch の許可画面が出るので、正しいアカウントか確認して **Authorize**(承認)を押します。認証(captcha)が出たら解いてください。
+4. サイトに戻ると **Access Token** という長い文字列が表示されます(*Refresh Token* や *Client ID* も表示される場合があります)。**Access Token だけ**をコピーします(コピーボタン、または選択して Ctrl+C)。
+5. ゲーム内で `/tw-chat` と入力し、**Config** をクリックします。 … **Conectar agora**(今すぐ接続)をクリックします。ステータスが緑色になります: *Conectado a #チャンネル名 como ユーザー名*。
+
+📖 **[トークンの詳しい手順](docs/GUIDE.JA.md)**
+
 ## 機能
 
 - Twitch チャットをウィンドウ **および/または** ゲームのチャットタブに表示(リンクシェルまたはクロスワールドリンクシェルの 1〜8 から選択可能、ガイドで説明)
@@ -40,10 +52,6 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 - 閲覧のみなら**アカウントもトークンも不要**。送信は `/tw-chat メッセージ`
 - ボットコマンド(`/` と `!`)、絵文字、エモート、リンクはブロック。同時接続は 1 チャットのみ。**メッセージを隠すことはありません**
 - **5 言語**(English・日本語・Deutsch・Français・Português)の初心者向け手順ガイド
-
-## 詳しい手順ガイド
-
-📖 **[日本語 – full step-by-step guide](docs/GUIDE.JA.md)** · [English](docs/GUIDE.EN.md) · [Português (Brasil)](docs/GUIDE.PT.md) · [Deutsch](docs/GUIDE.DE.md) · [Français](docs/GUIDE.FR.md)
 
 ## 重要
 

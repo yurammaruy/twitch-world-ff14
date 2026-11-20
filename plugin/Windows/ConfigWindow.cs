@@ -7,6 +7,19 @@ namespace TwitchWorld.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {
+    /// <summary>Abre um endereco no navegador padrao (so em resposta a um clique do usuario).</summary>
+    private static void OpenUrl(string url)
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = url, UseShellExecute = true });
+        }
+        catch
+        {
+            // Sem navegador disponivel: nada a fazer.
+        }
+    }
+
     private readonly Plugin plugin;
 
     private string link;
@@ -97,7 +110,12 @@ public class ConfigWindow : Window, IDisposable
                 if (plugin.Client.IsRunning) plugin.Connect();
             }
 
-            ImGui.TextDisabled("Veja o arquivo LEIA-ME para gerar o token (permissões: chat:read e chat:edit).");
+            ImGui.TextDisabled("Como gerar o token (permissões: chat:read e chat:edit):");
+            if (ImGui.Button("Abrir o guia do token (GitHub)"))
+                OpenUrl("https://github.com/yurammaruy/twitch-world-ff14/blob/main/docs/GUIDE.PT.md#como-gerar-o-token-da-twitch");
+            ImGui.SameLine();
+            if (ImGui.Button("Abrir o gerador de token"))
+                OpenUrl("https://twitchtokengenerator.com");
         }
 
         ImGui.Separator();

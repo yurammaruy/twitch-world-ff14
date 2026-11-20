@@ -32,6 +32,18 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 
 > Astuce : si Ctrl+V ne colle rien, copiez de nouveau l'adresse depuis la zone grise ci-dessus (bouton de copie en haut à droite).
 
+## Jeton Twitch (seulement pour envoyer des messages)
+
+**Le jeton n'est nécessaire que pour ENVOYER des messages.** Pour simplement lire un chat, ni compte ni jeton : passez cette section. Le jeton est un long texte qui fonctionne comme un mot de passe : il permet au plugin d'écrire dans le chat en votre nom. Vous ne donnez jamais votre mot de passe Twitch au plugin.
+
+1. Dans votre navigateur, connectez-vous à Twitch avec le compte avec lequel vous voulez discuter, puis ouvrez **https://twitchtokengenerator.com** (un site connu, qui n'appartient ni à Twitch ni à ce projet).
+2. Choisissez **Bot Chat Token** (l'option pour les bots de chat). Si le site n'affiche qu'une liste personnalisée, cochez les autorisations **chat:read** et **chat:edit**. Rien d'autre n'est nécessaire.
+3. Cliquez sur le bouton de connexion à Twitch. Une page Twitch demande l'autorisation. Vérifiez que c'est le bon compte et cliquez sur **Authorize** (Autoriser). Résolvez le captcha si demandé.
+4. De retour sur le site, un long texte appelé **Access Token** s'affiche (il peut y avoir aussi un *Refresh Token* et un *Client ID*). Copiez **uniquement l'Access Token** (bouton de copie, ou sélection puis Ctrl+C).
+5. Dans le jeu, tapez `/tw-chat` et cliquez sur **Config**. … Cliquez sur **Conectar agora** (*Se connecter maintenant*). Le statut passe au VERT : *Conectado a #chaîne como votre_pseudo*.
+
+📖 **[Tutoriel complet du jeton](docs/GUIDE.FR.md#comment-obtenir-votre-jeton-twitch)**
+
 ## Fonctionnalités
 
 - Chat Twitch en direct dans une fenêtre **et/ou** dans un onglet du chat du jeu (n'importe quel Linkshell ou Linkshell inter-mondes, de 1 à 8, expliqué dans le guide)
@@ -40,10 +52,6 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 - Le mode lecture seule ne demande **ni compte ni jeton** ; pour écrire : `/tw-chat votre message`
 - Bloque les commandes de bot (`/` et `!`), emojis, emotes et liens ; un seul chat à la fois ; **aucun message n'est masqué**
 - Guide pas à pas pour débutants en **5 langues** (English, 日本語, Deutsch, Français, Português)
-
-## Guide complet pas à pas
-
-📖 **[Français – full step-by-step guide](docs/GUIDE.FR.md)** · [English](docs/GUIDE.EN.md) · [Português (Brasil)](docs/GUIDE.PT.md) · [日本語](docs/GUIDE.JA.md) · [Deutsch](docs/GUIDE.DE.md)
 
 ## Important
 

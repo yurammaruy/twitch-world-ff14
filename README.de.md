@@ -32,6 +32,18 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 
 > Tipp: Wenn Strg+V nichts einfügt, kopiere die Adresse aus dem grauen Kasten oben erneut (Kopieren-Symbol rechts oben).
 
+## Twitch-Token (nur zum Senden von Nachrichten)
+
+**Ein Token brauchst du nur zum SENDEN von Nachrichten.** Zum bloßen Lesen brauchst du weder Konto noch Token: überspringe diesen Abschnitt. Das Token ist ein langer Text, der wie ein Passwort funktioniert: Er erlaubt dem Plugin, in deinem Namen im Chat zu schreiben. Dein Twitch-Passwort gibst du dem Plugin nie.
+
+1. Melde dich im Browser mit dem Konto an, mit dem du chatten möchtest, und öffne **https://twitchtokengenerator.com** (eine bekannte Seite, die weder von Twitch noch von diesem Projekt betrieben wird).
+2. Wähle **Bot Chat Token** (die Option für Chat-Bots). Zeigt die Seite nur eine eigene Auswahl, wähle die Berechtigungen **chat:read** und **chat:edit**. Mehr ist nicht nötig.
+3. Klicke auf die Schaltfläche zum Verbinden mit Twitch. Eine Twitch-Seite fragt nach Erlaubnis. Prüfe, ob es das richtige Konto ist, und klicke auf **Authorize** (Autorisieren). Löse das Captcha, falls verlangt.
+4. Zurück auf der Seite siehst du einen langen Text namens **Access Token** (eventuell auch *Refresh Token* und *Client ID*). Kopiere **nur das Access Token** (Kopieren-Schaltfläche oder markieren und Strg+C).
+5. Tippe im Spiel `/tw-chat` und klicke auf **Config**. … Klicke auf **Conectar agora** (*Jetzt verbinden*). Der Status wird GRÜN: *Conectado a #Kanal como dein_name*.
+
+📖 **[Vollständige Token-Anleitung](docs/GUIDE.DE.md#so-erhältst-du-dein-twitch-token)**
+
 ## Funktionen
 
 - Live-Twitch-Chat im Fenster **und/oder** in einem Spiel-Chat-Tab (beliebige Linkshell oder Cross-World-Linkshell 1–8, im Guide erklärt)
@@ -40,10 +52,6 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 - Nur-Lesen-Modus braucht **weder Konto noch Token**; Senden mit `/tw-chat deine Nachricht`
 - Blockiert Bot-Befehle (`/` und `!`), Emojis, Emotes und Links; ein Chat gleichzeitig; **keine Nachricht wird versteckt**
 - Schritt-für-Schritt-Anleitung für Laien in **5 Sprachen** (English, 日本語, Deutsch, Français, Português)
-
-## Vollständige Schritt-für-Schritt-Anleitung
-
-📖 **[Deutsch – full step-by-step guide](docs/GUIDE.DE.md)** · [English](docs/GUIDE.EN.md) · [Português (Brasil)](docs/GUIDE.PT.md) · [日本語](docs/GUIDE.JA.md) · [Français](docs/GUIDE.FR.md)
 
 ## Wichtig
 

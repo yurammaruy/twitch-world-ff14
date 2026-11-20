@@ -32,6 +32,18 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 
 > Tip: if Ctrl+V pastes nothing, copy the address again from the gray box above (use the copy button on its top-right corner).
 
+## Twitch token (only to send messages)
+
+**You only need a token to SEND messages.** To just read a chat you need no account and no token: skip this section. The token is a long text that works like a password: it lets the plugin write in chat as you. You never give your Twitch password to the plugin.
+
+1. In your browser, log in to Twitch with the account you want to chat with, then open **https://twitchtokengenerator.com** (a well-known site that is not run by Twitch or by this project).
+2. Choose **Bot Chat Token** (the option for chat bots). If the site only shows a custom list, pick the permissions **chat:read** and **chat:edit**. Nothing else is needed.
+3. Click the Twitch connect button. A Twitch page asks for permission. Check that it is the right account and click **Authorize**. Solve the captcha if asked.
+4. Back on the site you will see a long text called **Access Token** (there may also be a *Refresh Token* and a *Client ID*). Copy **only the Access Token** (use its copy button, or select it and press Ctrl+C).
+5. In the game, type `/tw-chat` and click **Config**. … Click **Conectar agora** (*Connect now*). The status turns green: *Conectado a #channel como your_username*.
+
+📖 **[Full token tutorial](docs/GUIDE.EN.md#how-to-get-your-twitch-token)**
+
 ## Features
 
 - Live Twitch chat in a window **and/or** in a game chat tab (any Linkshell or Cross-world Linkshell, 1–8, explained in the guide)
@@ -40,10 +52,6 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 - Read-only mode needs **no account and no token**; send with `/tw-chat your message`
 - Blocks bot commands (`/` and `!`), emojis, emotes and links; one chat at a time; **no message is hidden**
 - Step-by-step guide for non-programmers in **5 languages** (English, 日本語, Deutsch, Français, Português)
-
-## Full step-by-step guide
-
-📖 **[English – full step-by-step guide](docs/GUIDE.EN.md)** · [Português (Brasil)](docs/GUIDE.PT.md) · [日本語](docs/GUIDE.JA.md) · [Deutsch](docs/GUIDE.DE.md) · [Français](docs/GUIDE.FR.md)
 
 ## Important
 

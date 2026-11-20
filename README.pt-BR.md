@@ -32,6 +32,18 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 
 > Dica: se o Ctrl+V não colar nada, copie o endereço de novo na caixa cinza acima (botão de copiar no canto direito).
 
+## Token da Twitch (só para enviar mensagens)
+
+**Você só precisa do token para ENVIAR mensagens.** Para apenas ler um chat não precisa de conta nem de token: pule esta seção. O token é um texto longo que funciona como uma senha: ele deixa o plugin escrever no chat como você. Você nunca entrega a sua senha da Twitch ao plugin.
+
+1. No navegador, entre na Twitch com a conta com a qual quer conversar e abra o site **https://twitchtokengenerator.com** (um site conhecido que não é da Twitch nem deste projeto).
+2. Escolha **Bot Chat Token** (a opção para robôs de chat). Se o site mostrar só uma lista personalizada, marque as permissões **chat:read** e **chat:edit**. Nada além disso é necessário.
+3. Clique no botão para conectar com a Twitch. Uma página da Twitch pede permissão. Confira se é a conta certa e clique em **Authorize** (Autorizar). Resolva o captcha se pedir.
+4. De volta ao site aparece um texto longo chamado **Access Token** (pode haver também *Refresh Token* e *Client ID*). Copie **somente o Access Token** (botão de copiar, ou selecione e aperte Ctrl+C).
+5. No jogo, digite `/tw-chat` e clique em **Config**. … Clique em **Conectar agora**. O status fica VERDE: *Conectado a #canal como seu_usuario*.
+
+📖 **[Tutorial completo do token](docs/GUIDE.PT.md#como-gerar-o-token-da-twitch)**
+
 ## Recursos
 
 - Chat da Twitch ao vivo em janela **e/ou** numa aba do chat do jogo (qualquer Linkshell ou Cross-world Linkshell de 1 a 8, explicado no guia)
@@ -40,10 +52,6 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 - Modo só leitura **não precisa de conta nem token**; para enviar use `/tw-chat sua mensagem`
 - Bloqueia comandos de bot (`/` e `!`), emojis, emotes e links; um chat por vez; **nenhuma mensagem é ocultada**
 - Guia passo a passo para leigos em **5 idiomas** (English, 日本語, Deutsch, Français, Português)
-
-## Guia completo passo a passo
-
-📖 **[Português (Brasil) – full step-by-step guide](docs/GUIDE.PT.md)** · [English](docs/GUIDE.EN.md) · [日本語](docs/GUIDE.JA.md) · [Deutsch](docs/GUIDE.DE.md) · [Français](docs/GUIDE.FR.md)
 
 ## Importante
 
