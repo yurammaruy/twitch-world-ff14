@@ -2,7 +2,7 @@
 # (repo.json) para o Dalamud. Ninguem precisa instalar nada no PC.
 #
 # Como usar: aba "Actions" > "Compilar e publicar o plugin" > "Run workflow".
-# (ou crie uma nova "Release" com uma tag como v1.1.0 - roda sozinho)
+# (ou crie uma nova "Release" com uma tag como v1.2.0 - roda sozinho)
 
 name: Compilar e publicar o plugin
 
@@ -12,9 +12,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Versao do plugin (exemplo: 1.1.0)"
+        description: "Versao do plugin (exemplo: 1.2.0)"
         required: true
-        default: "1.1.0"
+        default: "1.2.0"
 
 permissions:
   contents: write
@@ -93,6 +93,38 @@ jobs:
           echo "Conteudo do pacote:"
           python -c "import zipfile;[print(' ',n) for n in zipfile.ZipFile('out/latest.zip').namelist()]"
 
+      - name: Garantir o icone dentro do pacote
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import json, os, zipfile
+          repo = os.environ["REPO"]
+          src, tmp = "out/latest.zip", "out/tmp.zip"
+          zin = zipfile.ZipFile(src)
+          names = [n.replace("\\", "/") for n in zin.namelist()]
+          zout = zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED)
+          for info, n in zip(zin.infolist(), names):
+              data = zin.read(info.filename)
+              if n.lower().endswith("twitchworld.json"):
+                  try:
+                      m = json.loads(data.decode("utf-8-sig"))
+                      m["IconUrl"] = f"https://raw.githubusercontent.com/{repo}/main/assets/icon.png"
+                      m["RepoUrl"] = f"https://github.com/{repo}"
+                      data = json.dumps(m, indent=2, ensure_ascii=False).encode("utf-8")
+                  except Exception as e:
+                      print("manifesto nao alterado:", e)
+              zout.writestr(n, data)
+          if "images/icon.png" not in names:
+              zout.write("plugin/images/icon.png", "images/icon.png")
+              print("images/icon.png adicionado ao pacote")
+          zout.close(); zin.close()
+          os.replace(tmp, src)
+          print("Pacote final:")
+          for n in zipfile.ZipFile(src).namelist():
+              print(" ", n)
+          PY
+
       - name: Publicar na Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -129,7 +161,7 @@ jobs:
             "DalamudApiLevel": 15,
             "AssemblyVersion": ver,
             "RepoUrl": f"https://github.com/{repo}",
-            "IconUrl": f"https://raw.githubusercontent.com/{repo}/main/assets/icon.png",
+            "IconUrl": f"https://raw.githubusercontent.com/{repo}/main/" + ("assets/icon.png" if os.path.exists("assets/icon.png") else "plugin/images/icon.png"),
             "DownloadLinkInstall": dl,
             "DownloadLinkUpdate": dl,
             "DownloadLinkTesting": dl,
