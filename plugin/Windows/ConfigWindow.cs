@@ -119,7 +119,7 @@ public class ConfigWindow : Window, IDisposable
 
         if (cfg.EchoToGameChat)
         {
-            var current = Math.Clamp(cfg.GameChatChannel, 0, Plugin.ChatChannels.Length - 1);
+            var current = Plugin.ChannelIndex(cfg);
             ImGui.TextUnformatted("Canal usado no chat do jogo:");
             ImGui.SetNextItemWidth(-1f);
             if (ImGui.BeginCombo("##canal", Plugin.ChatChannels[current].Label))
@@ -128,7 +128,7 @@ public class ConfigWindow : Window, IDisposable
                 {
                     if (ImGui.Selectable(Plugin.ChatChannels[i].Label, i == current))
                     {
-                        cfg.GameChatChannel = i;
+                        cfg.GameChatChannelType = (int)Plugin.ChatChannels[i].Type;
                         cfg.Save();
                     }
                 }

@@ -23,8 +23,12 @@ public class Configuration : IPluginConfiguration
     // Mostrar tambem as mensagens no chat normal do jogo
     public bool EchoToGameChat { get; set; } = false;
 
-    // Em qual canal do chat do jogo as mensagens aparecem (indice de Plugin.ChatChannels)
-    public int GameChatChannel { get; set; } = 0; // 0 = Linkshell [8]
+    // (Antigo) indice da lista de canais das versoes 1.0/1.1. So serve para migrar a escolha antiga.
+    public int GameChatChannel { get; set; } = 0;
+
+    // Canal do chat do jogo onde as mensagens aparecem (valor de XivChatType). -1 = ainda nao escolhido
+    // (usa a escolha antiga acima; se for instalacao nova, Linkshell [8]).
+    public int GameChatChannelType { get; set; } = -1;
 
     // ----- Cores e destaques -----
 

@@ -221,11 +221,47 @@ public sealed class Plugin : IDalamudPlugin
     /// <summary>Canais do chat do jogo que podem ser usados para mostrar o chat da Twitch.</summary>
     public static readonly (XivChatType Type, string Label)[] ChatChannels =
     {
+        (XivChatType.Ls1, "Linkshell [1]"),
+        (XivChatType.Ls2, "Linkshell [2]"),
+        (XivChatType.Ls3, "Linkshell [3]"),
+        (XivChatType.Ls4, "Linkshell [4]"),
+        (XivChatType.Ls5, "Linkshell [5]"),
+        (XivChatType.Ls6, "Linkshell [6]"),
+        (XivChatType.Ls7, "Linkshell [7]"),
         (XivChatType.Ls8, "Linkshell [8] (recomendado)"),
+        (XivChatType.CrossLinkShell1, "Cross-world Linkshell [1]"),
+        (XivChatType.CrossLinkShell2, "Cross-world Linkshell [2]"),
+        (XivChatType.CrossLinkShell3, "Cross-world Linkshell [3]"),
+        (XivChatType.CrossLinkShell4, "Cross-world Linkshell [4]"),
+        (XivChatType.CrossLinkShell5, "Cross-world Linkshell [5]"),
+        (XivChatType.CrossLinkShell6, "Cross-world Linkshell [6]"),
+        (XivChatType.CrossLinkShell7, "Cross-world Linkshell [7]"),
         (XivChatType.CrossLinkShell8, "Cross-world Linkshell [8]"),
         (XivChatType.Echo, "Echo (sem nome na frente)"),
         (XivChatType.Say, "Falar (/say)"),
     };
+
+    /// <summary>Posicao do canal escolhido na lista (migra a escolha das versoes antigas).</summary>
+    public static int ChannelIndex(Configuration cfg)
+    {
+        var type = cfg.GameChatChannelType;
+        if (type < 0)
+        {
+            type = cfg.GameChatChannel switch
+            {
+                1 => (int)XivChatType.CrossLinkShell8,
+                2 => (int)XivChatType.Echo,
+                3 => (int)XivChatType.Say,
+                _ => (int)XivChatType.Ls8,
+            };
+        }
+
+        for (var i = 0; i < ChatChannels.Length; i++)
+            if ((int)ChatChannels[i].Type == type)
+                return i;
+
+        return 7; // Linkshell [8]
+    }
 
     /// <summary>
     /// Monta a mensagem colorida: [SELOS] Nome disse: texto
@@ -265,7 +301,7 @@ public sealed class Plugin : IDalamudPlugin
     private void EchoToGame(string name, SeString message)
     {
         // Aparece SO para voce, no chat do jogo. Ninguem mais ve.
-        var index = Math.Clamp(Configuration.GameChatChannel, 0, ChatChannels.Length - 1);
+        var index = ChannelIndex(Configuration);
         ChatGui.Print(new XivChatEntry
         {
             Type = ChatChannels[index].Type,

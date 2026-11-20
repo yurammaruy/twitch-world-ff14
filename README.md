@@ -2,34 +2,44 @@
 
 **English** · [Português](README.pt-BR.md) · [日本語](README.ja.md) · [Deutsch](README.de.md) · [Français](README.fr.md)
 
-**Install:** 📦 with the installer (.exe) – below · 🔗 **[with the GitHub link – full guide](docs/INSTALL_GITHUB.EN.md)**
-
 <p align="center"><img src="assets/icon.png" width="128" alt="Twitch World FF14"></p>
 
-> Read and reply to any Twitch chat inside Final Fantasy XIV — a Dalamud plugin with a one-file Windows installer for non-programmers.
+> Read and reply to any Twitch chat inside Final Fantasy XIV — a Dalamud plugin you install with just a link.
 
 **Twitch World** shows the chat of any Twitch channel *inside* the game (in its own window and/or in a tab of the FFXIV chat, with each person's color and MOD / VIP / SUB badges) and lets you answer without leaving the game. It comes **clean**: no channel and no account configured. Made for streamers, mods and viewers who play FFXIV.
 
-## Download
+## Install with just the link
 
-**[⬇ Download the installer (latest release)](../../releases/tag/v1.0.0)**
+No installer, no download, no .NET. You paste **one address** into Dalamud and install Twitch World from the normal plugin list. Updates arrive on their own. It works anywhere XIVLauncher + Dalamud work (Windows, Linux, macOS).
+
+```text
+https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
+```
+
+1. In the game chat box, type `/xlsettings` and press Enter. The *Dalamud Settings* window opens.
+2. In the list on the left click **Experimental**.
+3. Scroll to **Custom Plugin Repositories**.
+4. Click the empty text box and paste this address with **Ctrl + V**:
+5. Click the **+** button on the right. The address appears in the list.
+6. Make sure the small **checkbox** next to the address is ticked.
+7. Click **Save and Close** at the bottom.
+8. Type `/xlplugins` and press Enter. The plugin installer opens.
+9. Click **All Plugins** in the menu on the left.
+10. In the search box type `Twitch World`.
+11. Click the **Install** button. Wait a few seconds.
+12. Find **Twitch World** in **Installed Plugins** and check that its switch is ON. You should see the icon, the version and **by Lirou**.
+13. Type `/tw-chat` in the game chat. The "Twitch World" window opens.
+
+> Tip: if Ctrl+V pastes nothing, copy the address again from the gray box above (use the copy button on its top-right corner).
 
 ## Features
 
-- Live Twitch chat in a window **and/or** in a game chat tab (Linkshell [8] trick, explained in the guide)
+- Live Twitch chat in a window **and/or** in a game chat tab (any Linkshell or Cross-world Linkshell, 1–8, explained in the guide)
 - Twitch name colors (approximated to the game's palette) and [STREAMER] [MOD] [VIP] [SUB] [BOT] badges
 - Messages that mention you are highlighted in gold; bot alerts in teal
 - Read-only mode needs **no account and no token**; send with `/tw-chat your message`
 - Blocks bot commands (`/` and `!`), emojis, emotes and links; one chat at a time; **no message is hidden**
-- Installer for non-programmers in **5 languages** (English, 日本語, Deutsch, Français, Português) with a step-by-step guide in each
-
-## Quick install (Windows 10/11)
-
-1. Download **TwitchWorldFF14-Setup.exe** from the [latest release](../../releases/tag/v1.0.0) (*Assets* section).
-2. Close FFXIV. Double-click the file. If Windows shows a blue *"Windows protected your PC"* box: **More info → Run anyway**.
-3. Choose your language, confirm, and wait for `[6/6]` (the first time it downloads .NET, ~250 MB).
-4. In the game: `/xlsettings` → **Experimental** → **Dev Plugin Locations** → paste (Ctrl+V; already copied for you) → **+** → **Save and Close**.
-5. `/xlplugins` → **Dev Tools** → **Installed Dev Plugins** → switch **Twitch World** ON → type `/tw-chat`.
+- Step-by-step guide for non-programmers in **5 languages** (English, 日本語, Deutsch, Français, Português)
 
 ## Full step-by-step guide
 
@@ -39,12 +49,11 @@
 
 - Dalamud plugins are **not allowed** by Square Enix's terms of service. This plugin only reads/writes text and automates nothing in the game, but the risk of using plugins exists — use at your own risk.
 - Unofficial project. Not affiliated with Square Enix, Twitch or Dalamud. "Twitch" and "Final Fantasy" belong to their owners.
-- The installer is **not digitally signed**, so Windows/antivirus may warn. The source is all in this repository, and each release lists the SHA-256 checksum. Download only from this page.
 - The Twitch token (only needed to *send* messages) is like a password. Never share it.
 
 ## Help / bugs
 
-Open an [Issue](../../issues/new/choose) (attach `install-log.txt`, never your token).
+Open an [Issue](../../issues/new/choose) and describe the step where it failed (never post your Twitch token).
 
 ---
 
