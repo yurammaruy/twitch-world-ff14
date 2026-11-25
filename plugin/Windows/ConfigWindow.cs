@@ -160,6 +160,25 @@ public class ConfigWindow : Window, IDisposable
 
         ImGui.Separator();
 
+        // ----- Alertas -----
+        ImGui.TextUnformatted("Alertas da Twitch");
+        ImGui.TextDisabled("Raids, inscrições, presentes, bits, resgates e avisos aparecem no chat.");
+
+        var sound = cfg.SoundEnabled;
+        if (ImGui.Checkbox("Tocar som nos alertas e nas mensagens de bots", ref sound))
+        {
+            cfg.SoundEnabled = sound;
+            cfg.Save();
+        }
+
+        ImGui.SameLine();
+        if (ImGui.Button("Testar som")) plugin.Sound.Play(true);
+
+        if (!plugin.Sound.Available)
+            ImGui.TextColored(new Vector4(1f, 0.6f, 0.3f, 1f), "O arquivo de som não foi carregado.");
+
+        ImGui.Separator();
+
         // ----- Filtro e cores -----
         ImGui.TextUnformatted("Cores e destaques do chat");
 

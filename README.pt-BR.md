@@ -48,6 +48,7 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 
 - Chat da Twitch ao vivo em janela **e/ou** numa aba do chat do jogo (qualquer Linkshell ou Cross-world Linkshell de 1 a 8, explicado no guia)
 - Cores dos nomes da Twitch (aproximadas à paleta do jogo) e selos [STREAMER] [MOD] [VIP] [SUB] [BOT]
+- **Alertas do canal**: raids, inscrições, presentes, bits, resgates de pontos e anúncios aparecem no chat em cores, com som de alerta opcional (botão para ligar/desligar na janela e nas Configurações). O som toca só para alertas e mensagens de bots, nunca no chat comum.
 - Mensagens que citam você ficam douradas; avisos de bots ficam em verde-água
 - Modo só leitura **não precisa de conta nem token**; para enviar use `/tw-chat sua mensagem`
 - Bloqueia comandos de bot (`/` e `!`), emojis, emotes e links; um chat por vez; **nenhuma mensagem é ocultada**

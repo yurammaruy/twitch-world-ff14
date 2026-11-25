@@ -232,3 +232,11 @@ Open an Issue on this GitHub project and describe the step where it failed. Neve
 ---
 
 Unofficial · MIT License · © 2026 Lirou
+
+## Twitch alerts and sound
+
+Since version 1.3.0 the plugin also shows **channel alerts** (raid, sub, gifted sub, bits, point redemption, announcement, new chatter) in color with a type tag such as `[RAID]`.
+
+- **Sound:** plays only for alerts and bot messages (bot list in Settings), never for normal chat.
+- **Turn the sound off:** click **Som: ligado** in the Twitch World window (it becomes **Som: desligado**) or untick the box in Settings > Alertas da Twitch. **Testar som** plays it once.
+- **Limits:** StreamElements/Streamlabs donations and new-follower notices only appear if the bot writes them in chat (then they count as bot messages). Twitch does not send those events through chat.

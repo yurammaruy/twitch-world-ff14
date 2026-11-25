@@ -238,3 +238,11 @@ Eröffne ein Issue in diesem GitHub-Projekt und beschreibe den Schritt, an dem e
 ---
 
 Unofficial · MIT License · © 2026 Lirou
+
+## Twitch-Alarme und Ton
+
+Ab Version 1.3.0 zeigt das Plugin auch **Kanal-Alarme** (Raid, Abo, Geschenk-Abo, Bits, Punkte-Einlösung, Ankündigung, neuer Chatter) farbig mit Typ-Label wie `[RAID]`.
+
+- **Ton:** nur bei Alarmen und Bot-Nachrichten (Bot-Liste in den Einstellungen), nie beim normalen Chat.
+- **Ton ausschalten:** **Som: ligado** im Twitch-World-Fenster anklicken (wird zu **Som: desligado**) oder in Einstellungen > Alertas da Twitch abwählen. **Testar som** spielt ihn einmal.
+- **Grenzen:** StreamElements/Streamlabs-Spenden und Follower-Meldungen erscheinen nur, wenn der Bot sie in den Chat schreibt (dann zählen sie als Bot-Nachricht).

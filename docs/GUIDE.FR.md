@@ -244,3 +244,11 @@ Ouvrez une Issue dans ce projet GitHub et décrivez l'étape qui échoue. Ne pub
 ---
 
 Unofficial · MIT License · © 2026 Lirou
+
+## Alertes Twitch et son
+
+Depuis la version 1.3.0, le plugin affiche aussi les **alertes de la chaîne** (raid, abonnement, abonnement offert, bits, récompense de points, annonce, nouveau venu) en couleur avec une étiquette comme `[RAID]`.
+
+- **Son** : uniquement pour les alertes et les messages de bots (liste des bots dans les réglages), jamais pour le chat normal.
+- **Couper le son** : cliquez sur **Som: ligado** dans la fenêtre Twitch World (devient **Som: desligado**) ou décochez la case dans Réglages > Alertas da Twitch. **Testar som** le joue une fois.
+- **Limites** : les dons StreamElements/Streamlabs et les nouveaux followers n'apparaissent que si le bot les écrit dans le chat (ils comptent alors comme messages de bot).

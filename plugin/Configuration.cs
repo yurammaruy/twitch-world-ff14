@@ -30,6 +30,9 @@ public class Configuration : IPluginConfiguration
     // (usa a escolha antiga acima; se for instalacao nova, Linkshell [8]).
     public int GameChatChannelType { get; set; } = -1;
 
+    // Toca um som quando chega um alerta (raid, inscricao, presente, bits... e mensagens de bots)
+    public bool SoundEnabled { get; set; } = true;
+
     // ----- Cores e destaques -----
 
     // Mostra [MOD] [VIP] [SUB] [STREAMER] [BOT] antes do nome

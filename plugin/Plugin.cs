@@ -27,6 +27,7 @@ public sealed class Plugin : IDalamudPlugin
 
     public Configuration Configuration { get; }
     public TwitchClient Client { get; } = new();
+    public SoundAlert Sound { get; } = new();
 
     // Mensagens ja prontas para exibir na janela
     public readonly List<ChatLine> Lines = new();
@@ -78,6 +79,7 @@ public sealed class Plugin : IDalamudPlugin
         FrameworkService.Update -= OnFrameworkUpdate;
         Client.MessageReceived -= OnTwitchMessage;
         Client.Dispose();
+        Sound.Dispose();
 
         CommandManager.RemoveHandler(CommandName);
         WindowSystem.RemoveAllWindows();
@@ -122,6 +124,10 @@ public sealed class Plugin : IDalamudPlugin
 
             var line = Classify(raw);
             AddLine(line);
+
+            // Som SO para alertas do canal e mensagens de bots (nunca para chat comum)
+            if (Configuration.SoundEnabled && (line.Kind == LineKind.Alert || line.IsBot))
+                Sound.Play();
 
             if (Configuration.EchoToGameChat)
                 EchoToGame(PlayerName(), BuildGameMessage(line));
@@ -271,6 +277,16 @@ public sealed class Plugin : IDalamudPlugin
     {
         var cfg = Configuration;
         var b = new SeStringBuilder();
+
+        if (line.Kind == LineKind.Alert)
+        {
+            var labelKey = GameColors.Nearest(ChatStyle.AlertColor(line.Label));
+            var head = $"[{line.Label}] ";
+            if (labelKey != 0) b.AddUiForeground(head, labelKey);
+            else b.AddText(head);
+            b.AddText(line.Text);
+            return b.Build();
+        }
 
         if (cfg.ShowBadges)
         {

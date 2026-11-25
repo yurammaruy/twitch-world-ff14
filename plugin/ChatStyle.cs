@@ -20,6 +20,18 @@ public static class ChatStyle
         0x4DABF7, 0x748FFC, 0xB197FC, 0xE599F7, 0xF783AC, 0xFF8787,
     };
 
+    /// <summary>Cor de cada tipo de alerta (RAID, INSCRICAO, PRESENTE, BITS...).</summary>
+    public static uint AlertColor(string label) => label switch
+    {
+        "RAID" => 0xFF8A4D,
+        "INSCRIÇÃO" => 0xB197FC,
+        "PRESENTE" => 0xF783AC,
+        "BITS" => 0x4DABF7,
+        "RESGATE" => 0x94D82D,
+        "NOVO NO CHAT" => 0x38D9A9,
+        _ => 0xFFD43B,
+    };
+
     public static uint NameColor(ChatLine line, bool colorize)
     {
         if (!colorize) return PlainNameColor;

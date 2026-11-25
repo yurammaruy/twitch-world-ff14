@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -19,6 +20,12 @@ public enum Roles
     Subscriber = 8,
 }
 
+public enum LineKind
+{
+    Chat,   // mensagem normal de alguem no chat
+    Alert,  // alerta do canal: raid, inscricao, presente, bits, recompensa, aviso...
+}
+
 /// <summary>
 /// Uma mensagem do chat. Login = nome da conta (minusculo), Rgb = cor escolhida na Twitch (0 = nenhuma).
 /// IsBot e IsMention sao preenchidos pelo plugin depois de receber a mensagem.
@@ -32,7 +39,9 @@ public sealed record ChatLine(
     uint Rgb = 0,
     Roles Roles = Roles.None,
     bool IsBot = false,
-    bool IsMention = false);
+    bool IsMention = false,
+    LineKind Kind = LineKind.Chat,
+    string Label = "");
 
 /// <summary>
 /// Conexao com o chat da Twitch (IRC sobre WebSocket).
@@ -353,6 +362,10 @@ public sealed class TwitchClient : IDisposable
                 HandlePrivMsg(prefix, args, tags);
                 break;
 
+            case "USERNOTICE":
+                HandleUserNotice(args, tags);
+                break;
+
             case "RECONNECT":
                 try { ws.Abort(); } catch { /* o loop reconecta */ }
                 break;
@@ -422,8 +435,227 @@ public sealed class TwitchClient : IDisposable
             rgb = parsed;
         }
 
+        // ----- mensagens que sao tambem um alerta (bits, recompensa de pontos, mensagem destacada) -----
+        string? label = null;
+        string? alertText = null;
+
+        if (tags.TryGetValue("bits", out var bitsTag) && int.TryParse(bitsTag, out var bits) && bits > 0)
+        {
+            label = "BITS";
+            alertText = $"{user} enviou {bits} bits: {clean}";
+        }
+        else if (tags.TryGetValue("custom-reward-id", out var reward) && !string.IsNullOrEmpty(reward))
+        {
+            label = "RESGATE";
+            alertText = $"{user} resgatou uma recompensa de pontos: {clean}";
+        }
+        else if (tags.TryGetValue("msg-id", out var msgId) && msgId == "highlighted-message")
+        {
+            label = "DESTAQUE";
+            alertText = $"{user} (mensagem destacada): {clean}";
+        }
+
+        if (label != null && alertText != null)
+        {
+            MessageReceived?.Invoke(new ChatLine(
+                DateTime.Now, "", alertText, false, nick.ToLowerInvariant(), 0, roles,
+                Kind: LineKind.Alert, Label: label));
+            return;
+        }
+
         MessageReceived?.Invoke(new ChatLine(
             DateTime.Now, user, clean, false, nick.ToLowerInvariant(), rgb, roles));
+    }
+
+    // ---------- Alertas do canal (USERNOTICE): raids, inscricoes, presentes... ----------
+
+    private void HandleUserNotice(string args, Dictionary<string, string> tags)
+    {
+        tags.TryGetValue("msg-id", out var id);
+        id ??= "";
+
+        // mensagem digitada junto com o evento (ex.: texto de uma resubscricao)
+        string attached = "";
+        var idx = args.IndexOf(" :", StringComparison.Ordinal);
+        if (idx >= 0)
+        {
+            tags.TryGetValue("emotes", out var emotes);
+            attached = Filters.SanitizeIncoming(args[(idx + 2)..], emotes) ?? "";
+        }
+
+        string Tag(string key) => tags.TryGetValue(key, out var v) ? Unescape(v) : "";
+        string Name(string key)
+        {
+            var v = Tag(key);
+            return string.IsNullOrWhiteSpace(v) ? "" : Filters.CleanName(v);
+        }
+
+        var who = Name("display-name");
+        if (who.Length == 0) who = Name("login");
+        if (who.Length == 0) who = "Alguém";
+
+        static string Plan(string plan) => plan switch
+        {
+            "Prime" => "Prime",
+            "1000" => "Nível 1",
+            "2000" => "Nível 2",
+            "3000" => "Nível 3",
+            _ => "",
+        };
+
+        static string Digits(string s) => s.Length > 0 && s.Length <= 9 && s.All(char.IsDigit) ? s : "";
+
+        string label;
+        string text;
+
+        switch (id)
+        {
+            case "raid":
+            {
+                label = "RAID";
+                var raider = Name("msg-param-displayName");
+                if (raider.Length == 0) raider = Name("msg-param-login");
+                if (raider.Length == 0) raider = who;
+                var viewers = Digits(Tag("msg-param-viewerCount"));
+                text = viewers.Length > 0
+                    ? $"{raider} está invadindo o canal com {viewers} espectadores!"
+                    : $"{raider} está invadindo o canal!";
+                break;
+            }
+
+            case "unraid":
+                label = "RAID";
+                text = "A invasão (raid) foi cancelada.";
+                break;
+
+            case "sub":
+            case "resub":
+            {
+                label = "INSCRIÇÃO";
+                var plan = Plan(Tag("msg-param-sub-plan"));
+                var planText = plan.Length > 0 ? $" ({plan})" : "";
+                var months = Digits(Tag("msg-param-cumulative-months"));
+                text = id == "sub" || months.Length == 0
+                    ? $"{who} se inscreveu{planText}!"
+                    : $"{who} renovou a inscrição{planText}: {months} meses no total!";
+                break;
+            }
+
+            case "subgift":
+            {
+                label = "PRESENTE";
+                var plan = Plan(Tag("msg-param-sub-plan"));
+                var planText = plan.Length > 0 ? $" ({plan})" : "";
+                var to = Name("msg-param-recipient-display-name");
+                if (to.Length == 0) to = Name("msg-param-recipient-user-name");
+                text = to.Length > 0
+                    ? $"{who} deu uma inscrição{planText} de presente para {to}!"
+                    : $"{who} deu uma inscrição{planText} de presente!";
+                break;
+            }
+
+            case "submysterygift":
+            {
+                label = "PRESENTE";
+                var plan = Plan(Tag("msg-param-sub-plan"));
+                var planText = plan.Length > 0 ? $" ({plan})" : "";
+                var count = Digits(Tag("msg-param-mass-gift-count"));
+                text = count.Length > 0
+                    ? $"{who} está dando {count} inscrições{planText} para a comunidade!"
+                    : $"{who} está dando inscrições{planText} para a comunidade!";
+                break;
+            }
+
+            case "giftpaidupgrade":
+            {
+                label = "INSCRIÇÃO";
+                var from = Name("msg-param-sender-name");
+                text = from.Length > 0
+                    ? $"{who} continua a inscrição que ganhou de {from}!"
+                    : $"{who} continua a inscrição que ganhou de presente!";
+                break;
+            }
+
+            case "anongiftpaidupgrade":
+                label = "INSCRIÇÃO";
+                text = $"{who} continua a inscrição que ganhou de um anônimo!";
+                break;
+
+            case "primepaidupgrade":
+            {
+                label = "INSCRIÇÃO";
+                var plan = Plan(Tag("msg-param-sub-plan"));
+                text = plan.Length > 0
+                    ? $"{who} passou da inscrição Prime para a paga ({plan})!"
+                    : $"{who} passou da inscrição Prime para a paga!";
+                break;
+            }
+
+            case "bitsbadgetier":
+            {
+                label = "BITS";
+                var tier = Digits(Tag("msg-param-threshold"));
+                text = tier.Length > 0
+                    ? $"{who} chegou ao selo de {tier} bits!"
+                    : $"{who} ganhou um novo selo de bits!";
+                break;
+            }
+
+            case "ritual":
+                label = "NOVO NO CHAT";
+                text = $"{who} é novo(a) no chat. Deem boas-vindas!";
+                break;
+
+            case "announcement":
+                label = "ANÚNCIO";
+                text = $"{who} fez um anúncio.";
+                break;
+
+            default:
+            {
+                // qualquer outro tipo: usa o texto original da Twitch (em ingles), ja limpo
+                label = "AVISO";
+                var system = Filters.StripUnsafe(Tag("system-msg")).Trim();
+                if (system.Length == 0) return;
+                text = system.Length > 200 ? system[..200] : system;
+                break;
+            }
+        }
+
+        if (attached.Length > 0) text += $" \"{attached}\"";
+
+        MessageReceived?.Invoke(new ChatLine(
+            DateTime.Now, "", text, false, Kind: LineKind.Alert, Label: label));
+    }
+
+    /// <summary>Desfaz a codificacao dos valores das tags IRC (\s = espaco, etc.).</summary>
+    private static string Unescape(string s)
+    {
+        if (s.IndexOf('\\') < 0) return s;
+
+        var sb = new StringBuilder(s.Length);
+        for (var i = 0; i < s.Length; i++)
+        {
+            var c = s[i];
+            if (c != '\\' || i == s.Length - 1)
+            {
+                sb.Append(c);
+                continue;
+            }
+
+            i++;
+            sb.Append(s[i] switch
+            {
+                's' => ' ',
+                ':' => ';',
+                'r' => ' ',
+                'n' => ' ',
+                '\\' => '\\',
+                _ => s[i],
+            });
+        }
+
+        return sb.ToString();
     }
 
     private static Dictionary<string, string> ParseTags(string tagString)

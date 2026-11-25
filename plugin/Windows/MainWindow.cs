@@ -56,6 +56,16 @@ public class MainWindow : Window, IDisposable
         ImGui.SameLine();
         if (ImGui.SmallButton("Config")) plugin.ToggleConfigUi();
 
+        ImGui.SameLine();
+        if (ImGui.SmallButton(cfg.SoundEnabled ? "Som: ligado" : "Som: desligado"))
+        {
+            cfg.SoundEnabled = !cfg.SoundEnabled;
+            cfg.Save();
+        }
+
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Som que toca só nos alertas do canal (raids, inscrições, bits...) e nas mensagens de bots.\nClique para ligar/desligar.");
+
         // ----- Area das mensagens -----
         var reserve = cfg.Interactive
             ? ImGui.GetFrameHeightWithSpacing() + ImGui.GetTextLineHeightWithSpacing()
@@ -112,6 +122,18 @@ public class MainWindow : Window, IDisposable
         // horario
         ImGui.TextDisabled($"{line.Time:HH:mm}");
         ImGui.SameLine(0f, 4f);
+
+        // alerta do canal: raid, inscricao, presente, bits...
+        if (line.Kind == LineKind.Alert)
+        {
+            var color = ChatStyle.ToVec4(ChatStyle.AlertColor(line.Label));
+            ImGui.TextColored(color, $"[{line.Label}]");
+            ImGui.SameLine(0f, 4f);
+            ImGui.PushStyleColor(ImGuiCol.Text, color);
+            ImGui.TextWrapped(line.Text);
+            ImGui.PopStyleColor();
+            return;
+        }
 
         // selos [STREAMER] [MOD] [VIP] [SUB] [BOT]
         if (cfg.ShowBadges)

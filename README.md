@@ -48,6 +48,7 @@ https://raw.githubusercontent.com/yurammaruy/twitch-world-ff14/main/repo.json
 
 - Live Twitch chat in a window **and/or** in a game chat tab (any Linkshell or Cross-world Linkshell, 1–8, explained in the guide)
 - Twitch name colors (approximated to the game's palette) and [STREAMER] [MOD] [VIP] [SUB] [BOT] badges
+- **Channel alerts**: raids, subs, resubs, gifted subs, bits, point redemptions and announcements show up in the chat in color, with an optional alert sound (on/off button in the window and in Settings). The sound plays only for alerts and bot messages, never for normal chat.
 - Messages that mention you are highlighted in gold; bot alerts in teal
 - Read-only mode needs **no account and no token**; send with `/tw-chat your message`
 - Blocks bot commands (`/` and `!`), emojis, emotes and links; one chat at a time; **no message is hidden**
